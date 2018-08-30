@@ -132,7 +132,7 @@ Page({
     }
     //url: '/pages/newlishi/index',
     wx.navigateTo({
-        url: '/pages/lishi/index',
+        url: '/pages/newlishi/index',
       
     })
   },

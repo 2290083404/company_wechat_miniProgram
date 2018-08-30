@@ -180,17 +180,7 @@ Page({
    */
   onLoad: function (options) {
     var allKeMu = wx.getStorageSync("allKeMu");
-    console.log(allKeMu);
-    for(var i=0; i<allKeMu.length; i++){
-      var kemu = allKeMu[i].lessionname;
-      console.log(kemu);
-      var arrnianji = allKeMu[i].children;
-      for(var e=0;e<arrnianji.length; e++){
-        var nianji = arrnianji[e].lessionname;
-        console.log(nianji);
-      }      
-    }
-    console.log(this.data.array);
+   
     var that=this;
     var userOpen=wx.getStorageSync("userOpen");
     wx.request({
@@ -198,15 +188,19 @@ Page({
       data: { openid: userOpen.openid},
       success:function(data){
         var arr=data.data;
+        console.log(arr);
         for(var i=0; i<arr.length;i++){
           var oddmath=arr[i].math;
           var newmath = (oddmath*100.00).toFixed(2)+"%";
-          arr[i].math=newmath;
+            arr[i]['math']=newmath;
         }
+        
+
+
+
         that.setData({     
           res: data.data,
         });
-       // console.log(data);
       }
     });
     wx.getSystemInfo({
