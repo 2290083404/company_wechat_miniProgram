@@ -119,7 +119,11 @@ function getUserAskOrReplyCount(){
 //获取当前用户以答题的链数据
 function getLianList(){
   return "https://wrlinkeradmin.applinzi.com/thinkphp/index.php/Home/MiniProgram/getLianList";
+}
 
+//判断用户是否达到某个难度等级
+function checkLevel(){
+    return "https://wrlinkeradmin.applinzi.com/thinkphp/index.php/Home/MiniProgram/checkLevel";
 }
 
 
@@ -150,3 +154,4 @@ module.exports.dealCuoTi = dealCuoTi;
 module.exports.dealWrongQuestion = dealWrongQuestion;
 module.exports.getUserAskOrReplyCount = getUserAskOrReplyCount;
 module.exports.getLianList = getLianList;
+module.exports.checkLevel = checkLevel;

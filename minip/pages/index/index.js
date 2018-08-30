@@ -130,8 +130,10 @@ Page({
         }
       })
     }
+    //url: '/pages/newlishi/index',
     wx.navigateTo({
-      url: '/pages/newlishi/index',
+        url: '/pages/lishi/index',
+      
     })
   },
   datiguize: function (e) {

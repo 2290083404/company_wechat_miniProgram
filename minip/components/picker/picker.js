@@ -38,6 +38,7 @@ Component({
     },
     _click: function (e) {
       var id = e.currentTarget.dataset.id;
+      console.log(id);
       var state=e.currentTarget.dataset.state;
       this.setData({
         "id": id,
@@ -45,32 +46,48 @@ Component({
       });
     },
     sure: function () {
-      var that = this
-      if(this.data.state){
+      var that = this;
         wx.showLoading({
-          title: '数据加载中...',
+            title: '数据加载中...',
         })
-        that.setData({
-          "showDialog": false
-        });
-        var lessionid=that.data.lessionid;
-        var openid=that.data.openid;
         
+        var lessionid = that.data.lessionid;
+        var openid = that.data.openid;
+        var id = that.data.id;
+        var levelid = parseInt(37) + parseInt(id);
         wx.hideLoading();
-        var url = "https://wrlinkeradmin.applinzi.com/thinkphp/index.php/Home/MiniProgram/dealMathJax/lessionid/" + lessionid + "/openid/" + openid;
-        wx.navigateTo({
-          url: '/pages/newdati/index?url=' + url,
+        //判断该用户是否到达了等级
+        wx.request({
+            url: api.checkLevel(),
+            data: { lessionid: lessionid, openid: openid, levelid: levelid},
+            success:function(data){
+               if(data.data>0){
+                   that.setData({
+                       "showDialog": false
+                   });
+                   var url = "https://wrlinkeradmin.applinzi.com/thinkphp/index.php/Home/MiniProgram/dealMathJax/lessionid/" + lessionid + "/openid/" + openid + "/levelid/" + levelid;
+                   wx.navigateTo({
+                       url: '/pages/newdati/index?url=' + url,
+                   })
+               }else{
+                   wx.showToast({
+                       title: '您还未达到该难度',
+                       icon: 'none',
+                       duration: 1000,
+                       mask: true
+                   })
+               }
+            }
         })
-      }else{
-        wx.showToast({
-          title: '您还未达到该难度',
-          icon: 'none',
-          duration: 1000,
-          mask: true
-        })
-      }
-      
 
+        //
+        /**
+        if(this.data.state){
+
+      }else{
+        
+      }
+        */
     },
     cancle: function () {
       var that = this
