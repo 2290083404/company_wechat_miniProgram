@@ -1,0 +1,19 @@
+<view>
+  <view class='min'>
+      <image src='/image/backImg.jpg' class='backimg'></image>
+  </view>
+  <view class='bodymin'>
+    <view class='top'>
+      <image src='/image/guizetop.png'></image>
+    </view>
+    <view class='guizenr'>
+      <view>
+        <view>
+          <text>1、每个难度等级对应不同的分数，如一级难度对应1分，以此类推，共18级难度，最高18分； </text>
+          <text>2、回答正确获得相应分值，打错则扣掉相应分值，不会则不扣分；</text>
+          <text>3、当在某个难度阶段累积一点分值后，可以点击升级，完成挑战题目，打到要求后可升级到下一个难度。</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
