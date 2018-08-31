@@ -26,12 +26,33 @@ height:15%;
 .guizenr{float:left;
 width:93%;
 margin-left:4%;
-height:65%;
-background-color:#fdf2de;
+height:82%;
+overflow: auto;
+font-size: 14px;
+color:#726960;
+
 }
-.guizenr text{float:left;
+.biaoti{float:left;
 width:100%;
 text-align:left;
+font-size:16px;
+font-weight:bold;
+color:#575445;
+margin-top: 20px;
+}
+.guizenr text{
+text-align:left;
+}
+.linian view{
+  float: left;
+  width: 100%;
+  margin: 5px 0px;
+  text-align: left;
+}
+.guize view{
+  float: left;
+  width: 100%;
+  text-align: left;
 }
 ::-webkit-scrollbar{
 width: 0;

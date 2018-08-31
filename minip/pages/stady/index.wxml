@@ -2,6 +2,7 @@
   <view class='min'>
       <image src='/image/backImg.jpg' class='backimg'></image>
   </view>
+  
   <view class='bodymin'>
     <view class='tuisongnr'>
       <text class='wz'>请输入提问内容</text>

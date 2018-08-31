@@ -143,6 +143,7 @@ Page({
       firArray[i]=allKeMu[i]['lessionname'];
     }
     var lessionId = allKeMu[0]['children'][0]['id'];
+    console.log(lessionId);
     for(var j=0;j<allKeMu[0]['children'].length;j++){
       secArray[j] = allKeMu[0]['children'][j]['lessionname'];
     }

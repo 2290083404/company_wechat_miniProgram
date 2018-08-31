@@ -1,5 +1,6 @@
 // pages/newlishi/index.js
 var api=require("../../api/api.js");
+var common = require("../../api/common.js");
 Page({
 
   /**
@@ -7,133 +8,18 @@ Page({
    */
   data: {
     res: [],
-    array:[
-      [
-        {
-          id: 0,
-          name: '语文'
-        },
-        {
-          id: 2,
-          name: '数学'
-        },
-        {
-          id: 3,
-          name: '英语'
-        },
-        {
-          id: 4,
-          name: '物理'
-        },
-        {
-          id: 5,
-          name: '化学'
-        },
-        {
-          id: 6,
-          name: '政治'
-        },
-        {
-          id: 7,
-          name: '历史'
-        },
-        {
-          id: 8,
-          name: '地理'
-        }
-      ], [
-        {
-          id: 0,
-          name: '小学'
-        },
-        {
-          id: 1,
-          name: '初中'
-        },
-        {
-          id: 2,
-          name: '高中'
-        },
-        {
-          id: 3,
-          name: '考研'
-        }
-      ],[
-        {
-          id: 0,
-          name: '书童'
-        },
-        {
-          id: 1,
-          name: '童生'
-        },
-        {
-          id: 2,
-          name: '秀才'
-        },
-        {
-          id: 3,
-          name: '案首'
-        },
-        {
-          id: 4,
-          name: '举人'
-        },
-        {
-          id: 5,
-          name: '解元'
-        },
-        {
-          id: 6,
-          name: '亚元'
-        },
-        {
-          id: 7,
-          name: '贡生'
-        },
-        {
-          id: 8,
-          name: '经元'
-        },
-        {
-          id: 9,
-          name: '会元'
-        },
-        {
-          id: 10,
-          name: '同进士出身'
-        },
-        {
-          id: 11,
-          name: '进士出身'
-        },
-        {
-          id: 12,
-          name: '探花'
-        },
-        {
-          id: 13,
-          name: '榜眼'
-        },
-        {
-          id: 14,
-          name: '状元'
-        },
-        {
-          id: 15,
-          name: '连中三元'
-        },
-        {
-          id: 16,
-          name: '翰林供奉'
-        },
-        {
-          id: 17,
-          name: '翰林学士'
-        }
-      ]
-    ],
-    multiIndex2: [0, 0, 0],
+    multiArray:[],
+    multiIndex: [0],
+    zongkemu:[],
+    shuxue:[],
+    hanyu:[],
+    yingyu:[],
+    wuli:[],
+    huaxue:[],
+    shengwu:[],
+    zhengzhi:[],
+    lishi:[],
+    dili:[],
   },
   lower() {
     var currentPage = this.data.currentPage;
@@ -179,51 +65,159 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var allKeMu = wx.getStorageSync("allKeMu");
-   
-    var that=this;
-    var userOpen=wx.getStorageSync("userOpen");
-    wx.request({
-      url: api.getLianList(),
-      data: { openid: userOpen.openid},
-      success:function(data){
-        var arr=data.data;
-        console.log(arr);
-        for(var i=0; i<arr.length;i++){
-          var oddmath=arr[i].math;
-          var newmath = (oddmath*100.00).toFixed(2)+"%";
-            arr[i]['math']=newmath;
-        }
-        
-
-
-
-        that.setData({     
-          res: data.data,
-        });
-      }
-    });
-    wx.getSystemInfo({
-      success: (res) => {
-        this.setData({
-          height: res.windowHeight
-        })
-      }
-    })
+      
+    
+    
   },
-
+  wangqi:function(e){
+    var userOpen = wx.getStorageSync("userOpen");
+    var openid = userOpen.openid;
+    var lessionid=e.currentTarget.dataset.lessionid;
+    var levelid = e.currentTarget.dataset.levelid;
+    var url = "https://wrlinkeradmin.applinzi.com/thinkphp/index.php/Home/MiniProgram/dealMathJax/lessionid/"+lessionid +"/openid/" + openid + "/levelid/" + levelid;
+    wx.navigateTo({
+       url: '/pages/newdati/index?url=' + url, 
+    });
+  },
+  
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+      
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+      wx.showLoading({
+          title: '正在加载211...',
+      })
+      this.setData({
+          zongkemu: [],
+          shuxue: [],
+          hanyu: [],
+          yingyu: [],
+          wuli: [],
+          huaxue: [],
+          shengwu: [],
+          zhengzhi: [],
+          lishi: [],
+          dili: [],
+      });
+
+      var that = this;
+      var userOpen = wx.getStorageSync("userOpen");
+      wx.request({
+          url: api.getLianList(),
+          data: { openid: userOpen.openid },
+          success: function (data) {
+              var arr = data.data;
+              for (var i = 0; i < arr.length; i++) {
+                  var oddmath = arr[i].math;
+                  var newmath = (oddmath * 100.00).toFixed(2) + "%";
+                  arr[i].math = newmath;
+                  if (arr[i].lessionname == "数学") {
+                      var kemu = new Array();
+                      var kemu = arr[i];
+                      that.setData({
+                          'shuxue': that.data.shuxue.concat(kemu),
+                      });
+                  } else if (arr[i].lessionname == "汉语") {
+                      var kemu = new Array();
+                      var kemu = arr[i];
+                      that.setData({
+                          'hanyu': that.data.hanyu.concat(kemu),
+                      });
+                  } else if (arr[i].lessionname == "英语") {
+                      var kemu = new Array();
+                      var kemu = arr[i];
+                      that.setData({
+                          'yingyu': that.data.yingyu.concat(kemu),
+                      });
+                  } else if (arr[i].lessionname == "物理") {
+                      var kemu = new Array();
+                      var kemu = arr[i];
+                      that.setData({
+                          'wuli': that.data.wuli.concat(kemu),
+                      });
+                  } else if (arr[i].lessionname == "化学") {
+                      var kemu = new Array();
+                      var kemu = arr[i];
+                      that.setData({
+                          'huaxue': that.data.huaxue.concat(kemu),
+                      });
+                  } else if (arr[i].lessionname == "生物") {
+                      var kemu = new Array();
+                      var kemu = arr[i];
+                      that.setData({
+                          'shengwu': that.data.shengwu.concat(kemu),
+                      });
+                  } else if (arr[i].lessionname == "政治") {
+                      var kemu = new Array();
+                      var kemu = arr[i];
+                      that.setData({
+                          'zhengzhi': that.data.zhengzhi.concat(kemu),
+                      });
+                  } else if (arr[i].lessionname == "历史") {
+                      var kemu = new Array();
+                      var kemu = arr[i];
+                      that.setData({
+                          'lishi': that.data.lishi.concat(kemu),
+                      });
+                  } else if (arr[i].lessionname == "地理") {
+                      var kemu = new Array();
+                      var kemu = arr[i];
+                      that.setData({
+                          'dili': that.data.dili.concat(kemu),
+                      });
+                  }
+              }
+              var shuxue = that.data.shuxue;
+              var hanyu = that.data.hanyu;
+              var yingyu = that.data.yingyu;
+              var wuli = that.data.wuli;
+              var huaxue = that.data.huaxue;
+              var zhengzhi = that.data.zhengzhi;
+              var shengwu = that.data.shengwu;
+              var lishi = that.data.lishi;
+              var dili = that.data.dili;
+              that.setData({
+                  'zongkemu': that.data.zongkemu.concat(hanyu),
+              });
+              that.setData({
+                  'zongkemu': that.data.zongkemu.concat(shuxue),
+              });
+              that.setData({
+                  'zongkemu': that.data.zongkemu.concat(yingyu),
+              });
+              that.setData({
+                  'zongkemu': that.data.zongkemu.concat(wuli),
+              });
+              that.setData({
+                  'zongkemu': that.data.zongkemu.concat(huaxue),
+              });
+              that.setData({
+                  'zongkemu': that.data.zongkemu.concat(shengwu),
+              });
+              that.setData({
+                  'zongkemu': that.data.zongkemu.concat(zhengzhi),
+              });
+              that.setData({
+                  'zongkemu': that.data.zongkemu.concat(lishi),
+              });
+              that.setData({
+                  'zongkemu': that.data.zongkemu.concat(dili),
+              });
+              var arr = that.data.zongkemu;
+              that.setData({
+                  res: arr,
+              });
+              wx.hideLoading();
+          }
+      });
+
   },
 
   /**
