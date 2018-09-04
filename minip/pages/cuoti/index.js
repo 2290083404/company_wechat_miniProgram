@@ -32,14 +32,10 @@ Page({
       var that = this;
       wx.request({
         url: api.getWrongQuestionList(),
-        data: { type: 0, openid: userOpen.openid, page: parseInt(page) + 1, limit: 5 },
+        data: { type: 0, openid: userOpen.openid, page: parseInt(page) + 1, limit: 10 },
         success: function (data) {
           var listRes = data.data.questionList;
           var oldList=that.data.list;
-          
-          
-
-
           for (let i = 0; i < listRes.length; i++) {
 
             WxParse.wxParse('topic' + i, 'html', listRes[i]['questionInfo'][0]['question'], that);
